@@ -1,0 +1,17 @@
+imagePullSecrets:
+  - name: ghcr-secret-eks
+
+frontend:
+  image:
+    repository: ghcr.io/adigershom/skywatch-frontend
+    tag: v2
+
+  replicas: 1
+
+
+worker:
+  image:
+    repository: ghcr.io/adigershom/skywatch-worker
+    tag: v3
+
+  replicas: 2

@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+
+kind: StatefulSet
+
+
+metadata:
+
+  name: skywatch-rabbitmq
+
+
+spec:
+
+  serviceName: skywatch-rabbitmq
+
+
+  replicas: 1
+
+
+  selector:
+
+    matchLabels:
+
+      app: skywatch-rabbitmq
+
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: skywatch-rabbitmq
+
+
+    spec:
+
+      containers:
+
+        - name: rabbitmq
+
+
+          image: rabbitmq:3.13-management
+
+
+          ports:
+
+            - containerPort: 5672
+
+              name: amqp
+
+
+            - containerPort: 15672
+
+              name: management
+
+
+          envFrom:
+
+            - secretRef:
+
+                name: skywatch-rabbitmq

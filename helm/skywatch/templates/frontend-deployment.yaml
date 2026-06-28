@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: skywatch-frontend
+
+  labels:
+    app: skywatch-frontend
+
+
+spec:
+
+  replicas: {{ .Values.frontend.replicas }}
+
+  selector:
+
+    matchLabels:
+      app: skywatch-frontend
+
+
+  template:
+
+    metadata:
+
+      labels:
+        app: skywatch-frontend
+
+
+    spec:
+
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+
+      containers:
+
+        - name: frontend
+
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+
+          ports:
+
+            - containerPort: 5000
+
+
+          env:
+
+            - name: RABBITMQ_HOST
+              value: skywatch-rabbitmq
+
+            - name: RABBITMQ_PORT
+              value: "5672"
+
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: skywatch-rabbitmq
+                  key: RABBITMQ_DEFAULT_USER
+
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: skywatch-rabbitmq
+                  key: RABBITMQ_DEFAULT_PASS
