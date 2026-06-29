@@ -47,7 +47,7 @@ jobs:
     - name: Build worker image
       run: |
         docker build \
-        -t ghcr.io/${{ github.repository }}/skywatch-worker:${{ github.sha }} \
+        -t ghcr.io/adigershom/skywatch-worker:${{ github.sha }} \
         ./app/worker
 
 
