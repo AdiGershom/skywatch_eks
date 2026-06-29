@@ -34,14 +34,14 @@ jobs:
     - name: Build frontend image
       run: |
         docker build \
-        -t ghcr.io/${{ github.repository }}/skywatch-frontend:${{ github.sha }} \
+        -t ghcr.io/adigershom/skywatch-frontend:${{ github.sha }} \
         ./app/frontend
 
 
     - name: Push frontend image
       run: |
         docker push \
-        ghcr.io/${{ github.repository }}/skywatch-frontend:${{ github.sha }}
+        ghcr.io/adigershom/skywatch-frontend:${{ github.sha }}
 
 
     - name: Build worker image
@@ -54,4 +54,4 @@ jobs:
     - name: Push worker image
       run: |
         docker push \
-        ghcr.io/${{ github.repository }}/skywatch-worker:${{ github.sha }}
+        ghcr.io/adigershom/skywatch-worker:${{ github.sha }}
