@@ -31,14 +31,27 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Build Docker image
+    - name: Build frontend image
       run: |
         docker build \
-        -t ghcr.io/${{ github.repository }}/frontend:${{ github.sha }} \
+        -t ghcr.io/${{ github.repository }}/skywatch-frontend:${{ github.sha }} \
         ./app/frontend
 
 
-    - name: Push image
+    - name: Push frontend image
       run: |
         docker push \
-        ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
+        ghcr.io/${{ github.repository }}/skywatch-frontend:${{ github.sha }}
+
+
+    - name: Build worker image
+      run: |
+        docker build \
+        -t ghcr.io/${{ github.repository }}/skywatch-worker:${{ github.sha }} \
+        ./app/worker
+
+
+    - name: Push worker image
+      run: |
+        docker push \
+        ghcr.io/${{ github.repository }}/skywatch-worker:${{ github.sha }}
