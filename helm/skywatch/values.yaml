@@ -14,4 +14,4 @@ worker:
     repository: ghcr.io/adigershom/skywatch-worker
     tag: v3
 
-  replicas: 2
+  replicas: 3
