@@ -55,3 +55,22 @@ jobs:
       run: |
         docker push \
         ghcr.io/adigershom/skywatch-worker:${{ github.sha }}
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+
+    - name: Update kubeconfig
+      run: |
+        aws eks update-kubeconfig \
+        --name skywatch-eks \
+        --region eu-west-1
+
+    - name: Deploy Helm
+      run: |
+        helm upgrade --install skywatch ./helm/skywatch \
+        --set frontend.image.tag=${{ github.sha }} \
+        --set worker.image.tag=${{ github.sha }}
